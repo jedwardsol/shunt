@@ -18,12 +18,21 @@
     <ClCompile Include="shunt.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="rpn.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="main.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="thrower.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="print.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="shunt.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
