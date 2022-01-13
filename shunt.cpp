@@ -27,7 +27,7 @@ struct Parse
 
 };
 
-std::map<char, Parse> precedence
+std::map<char, Parse> parse
 {
     { '^'   , {3, static_cast<OpPointer>(std::pow)} },
     { '*'   , {2, std::multiplies<double>{} }},
@@ -41,7 +41,7 @@ std::map<char, Parse> precedence
 
 bool isOperator(char c)
 {
-    return precedence.contains(c);    
+    return parse.contains(c);    
 }
 
 RPN shunt(std::vector<std::string> const &tokens)
@@ -54,7 +54,7 @@ RPN shunt(std::vector<std::string> const &tokens)
         auto symbol = operators.top();
         operators.pop();
 
-        rpn.push_back( precedence[symbol].op);
+        rpn.push_back( parse[symbol].op);
     };
 
 
@@ -65,6 +65,12 @@ RPN shunt(std::vector<std::string> const &tokens)
 
         if(isOperator(symbol))
         {
+            while(   !operators.empty()
+                  &&  parse[operators.top()].precedence >= parse[symbol].precedence)
+            {
+                transferOperator();
+            }
+
             
             operators.push(symbol);
         }

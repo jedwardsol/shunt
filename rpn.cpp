@@ -48,7 +48,6 @@ public:
 
 private:
     std::stack<double>   numbers;
-
 };
 
 
