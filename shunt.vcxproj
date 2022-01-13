@@ -361,8 +361,11 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClCompile Include="data1.cpp" />
-    <ClCompile Include="day1.cpp" />
+    <ClCompile Include="shunt.cpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="print.h" />
+    <ClInclude Include="thrower.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
