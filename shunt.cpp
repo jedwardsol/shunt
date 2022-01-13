@@ -1,3 +1,4 @@
+#define NOMINMAX
 #include <cstdint>
 #include <limits>
 #include <cmath>
@@ -15,28 +16,34 @@
 
 
 
-double NaN(double lhs, double rhs)
-{
-    return std::numeric_limits<double>::quiet_NaN();
-}
-
 struct Parse
 {
     int         precedence{};
     Operator    op;
-
 };
+
+
+template<typename T>
+ struct OpMax
+ {
+     T operator()(T lhs, T  rhs) const 
+     {
+         return std::max(lhs, rhs);
+     }
+ };
+
 
 std::map<std::string, Parse> parse
 {
+    { "max" , {99, OpMax<double>{} }},           
+
+
     { "^^"  , {3, static_cast<OpPointer>(std::pow)} },             // ^ is an escape character in cmd
     { "^"   , {3, static_cast<OpPointer>(std::pow)} },
     { "*"   , {2, std::multiplies<double>{} }},
     { "/"   , {2, std::divides<double>{}    }},
     { "+"   , {1, std::plus<double>{}       }},
     { "-"   , {1, std::minus<double>{}      }},
-
-
 };
 
 
@@ -57,6 +64,10 @@ bool isClose(std::string const &c)
     return c == ")";    
 }
 
+bool isIgnored(std::string const &c)
+{
+    return c == ",";    
+}
 
 
 RPN shunt(std::vector<std::string> const &tokens)
@@ -69,12 +80,20 @@ RPN shunt(std::vector<std::string> const &tokens)
         auto symbol = operators.top();
         operators.pop();
 
+        if(isOpen(symbol))
+        {
+            throw_runtime_error("Mismatched (");
+        }
+
         rpn.push_back( parse[symbol].op);
     };
 
     for(auto const &token : tokens)
     {
-        if(isOpen(token))
+        if(isIgnored(token))
+        {
+        }
+        else if(isOpen(token))
         {
             operators.push(token);
         }
@@ -88,7 +107,7 @@ RPN shunt(std::vector<std::string> const &tokens)
 
             if(operators.empty())
             {
-                throw_runtime_error("Mismatched parentheses");
+                throw_runtime_error("Mismatched )");
             }
 
             operators.pop();
