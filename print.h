@@ -8,5 +8,5 @@
 template <typename ...ARGS>
 void print(std::string_view format, ARGS    &&...args)
 {
-    std::cout << std::format(format,std::forward<ARGS...>(args)...);
+    std::cout << std::format(format,std::forward<ARGS>(args)...);
 }
