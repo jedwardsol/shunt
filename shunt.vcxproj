@@ -361,10 +361,13 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="main.cpp" />
+    <ClCompile Include="rpn.cpp" />
     <ClCompile Include="shunt.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="print.h" />
+    <ClInclude Include="shunt.h" />
     <ClInclude Include="thrower.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
